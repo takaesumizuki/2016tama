@@ -6,11 +6,111 @@ public class Library{
     void run(){
         this.printWelcomeMessage();
         this.addBooks(shelf);
+        // this.list();
+        this.findAndPrint("太陽の法","松本智津夫",null,null);
+        System.out.println("or search");
+        this.findOrPrint("あの日","松本智津夫","東アジア反日武装戦線",1919);
+        this.remove2("太陽の法",null,null,null);
+        System.out.println("poa");
         this.list();
-        this.printBook(this.find("聖教新聞"));
-        this.printBook(this.find("腹腹時計"));
     }
 
+    void remove2(String title, String author, String publisher, Integer publishYear){
+        Book book = createBook(title, author, publisher, publishYear);
+        shelf.remove(book);
+    }
+
+    List<Book> findOrPrint(String title, String authors, String publisher, Integer publishYear){
+        List<Book> shelf = this.findOr(title,authors,publisher,publishYear);
+        this.printList(shelf);
+        return shelf;
+    }
+
+    List<Book> findOr(String title, String authors, String publisher, Integer publishYear){
+        List<Book> result = new ArrayList<Book>();
+
+        for(Book book: shelf){
+            if(this.isOrMatch(book, title, authors, publisher, publishYear)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    Boolean isOrMatch(Book book, String title, String authors,
+    String publisher, Integer publishYear){
+        Boolean flag = false;
+        //titleの比較
+        if(title != null && Objects.equals(book.title,title)){
+            flag = true;
+        }
+        //authorsの比較
+        if(authors != null && Objects.equals(book.authors,authors)){
+            flag = true;
+        }
+        //publisherの比較
+        if(publisher != null && Objects.equals(book.publisher,publisher)){
+            flag = true;
+        }
+
+        //publishyearの比較
+        if(publishYear != null && (publishYear == book.publishYear)){
+            flag = true;
+        }
+        return flag;
+    }
+
+    List<Book> findAndPrint(String title, String authors, String publisher, Integer publishYear){
+        List<Book> shelf = this.findAnd(title,authors,publisher,publishYear);
+        this.printList(shelf);
+        return shelf;
+    }
+
+    void printList(List<Book> shelf){
+        for(Book book: shelf){
+            this.printBook(book);
+        }
+    }
+
+    void remove(Book book){
+        this.shelf.remove(book);
+    }
+
+    List<Book> findAnd(String title, String authors, String publisher, Integer publishYear){
+        List<Book> result = new ArrayList<Book>();
+
+        for(Book book: shelf){
+            if(this.isMatch(book, title, authors, publisher, publishYear)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    Boolean isMatch(Book book, String title, String authors,
+    String publisher, Integer publishYear){
+        Boolean flag = true;
+        //titleの比較
+        if(title != null && !Objects.equals(book.title,title)){
+            flag = false;
+        }
+        //authorsの比較
+        if(authors != null && !Objects.equals(book.authors,authors)){
+            flag = false;
+        }
+        //publisherの比較
+        if(publisher != null && !Objects.equals(book.publisher,publisher)){
+            flag = false;
+        }
+
+        //publishyearの比較
+        if(publishYear != null && !(publishYear == book.publishYear)){
+            flag = false;
+        }
+        return flag;
+    }
+
+    //本のタイトルから本を探すメソッド
     Book find(String searchName){
         Book foundBook = null;
         for(Book book: shelf){
