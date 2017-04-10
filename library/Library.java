@@ -2,17 +2,25 @@ import java.util.*;
 
 public class Library{
     List<Book> shelf = new ArrayList<Book>();
+    UserManager manager = new UserManager();
 
     void run(){
         this.printWelcomeMessage();
         this.addBooks(shelf);
-        // this.list();
-        this.findAndPrint("太陽の法","松本智津夫",null,null);
-        System.out.println("or search");
-        this.findOrPrint("あの日","松本智津夫","東アジア反日武装戦線",1919);
-        this.remove2("太陽の法",null,null,null);
-        System.out.println("poa");
-        this.list();
+
+        this.registerUsers();
+        Iterator<User> iterator = manager.iterator();
+        while( iterator.hasNext() ){
+            manager.print(iterator.next());
+        }
+    }
+
+    void registerUsers(){
+        manager.add(manager.create("岩間","男",50));
+        manager.add(manager.create("松本","男",69));
+        manager.add(manager.create("金正日","男",70));
+        manager.add(manager.create("KRSW","男",39));
+        manager.add(manager.create("田所浩二","男",24));
     }
 
     void remove2(String title, String author, String publisher, Integer publishYear){

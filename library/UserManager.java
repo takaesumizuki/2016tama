@@ -19,6 +19,17 @@ public class UserManager{
 
         users = this.find("麻原彰晃","女",69);
         this.printList(users);
+
+        System.out.println("イテレータを実行------");
+        Iterator<User> iterator;
+        iterator =  this.iterator();
+        while(iterator.hasNext()){
+            this.print(iterator.next());
+        }
+    }
+
+    public Iterator<User> iterator(){
+        return userList.iterator();
     }
 
     User create(String name,String gender,Integer age){
