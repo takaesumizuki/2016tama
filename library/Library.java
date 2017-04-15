@@ -3,6 +3,7 @@ import java.util.*;
 public class Library{
     List<Book> shelf = new ArrayList<Book>();
     UserManager manager = new UserManager();
+    Map<Book,List<History>> historyMap = new Map()<>;
 
     void run(){
         this.printWelcomeMessage();
@@ -15,6 +16,13 @@ public class Library{
         }
     }
 
+    History createHistory(User,Book){
+        History history;
+        history.user = User;
+        history.book = Book;
+        history.lendDate = new Date();
+        return history;
+    }
     void registerUsers(){
         manager.add(manager.create("岩間","男",50));
         manager.add(manager.create("松本","男",69));
